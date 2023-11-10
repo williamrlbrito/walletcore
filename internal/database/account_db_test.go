@@ -34,3 +34,22 @@ func (suite *AccountDBTestSuite) TearDownSuite() {
 func TestAccountDBTestSuite(t *testing.T) {
 	suite.Run(t, new(AccountDBTestSuite))
 }
+
+func (suite *AccountDBTestSuite) TestSave() {
+	account := entity.NewAccount(suite.client)
+	err := suite.accountDB.Save(account)
+	suite.Nil(err)
+}
+
+func (suite *AccountDBTestSuite) TestFindByID() {
+	suite.db.Exec("INSERT INTO clients (id, name, email, created_at) VALUES (?, ?, ?, ?)", suite.client.ID, suite.client.Name, suite.client.Email, suite.client.CreatedAt)
+	account := entity.NewAccount(suite.client)
+	suite.accountDB.Save(account)
+	accountFound, err := suite.accountDB.FindByID(account.ID)
+	suite.Nil(err)
+	suite.Equal(account.ID, accountFound.ID)
+	suite.Equal(account.Balance, accountFound.Balance)
+	suite.Equal(account.Client.ID, accountFound.Client.ID)
+	suite.Equal(account.Client.Name, accountFound.Client.Name)
+	suite.Equal(account.Client.Email, accountFound.Client.Email)
+}
