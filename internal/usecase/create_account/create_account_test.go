@@ -46,7 +46,7 @@ func TestCreateAccountUseCase(t *testing.T) {
 
 	useCase := NewCreateAccountUseCase(accountGatewayMock, clientGatewayMock)
 
-	input := &CreateAccountInputDTO{
+	input := CreateAccountInputDTO{
 		ClientId: client.ID,
 	}
 
