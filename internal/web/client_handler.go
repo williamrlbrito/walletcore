@@ -4,21 +4,22 @@ import (
 	"encoding/json"
 	"net/http"
 
-	createclient "github.com/williamrlbrito/walletcore/internal/usecase/create_client"
+	"github.com/williamrlbrito/walletcore/internal/usecase/create_client"
 )
 
 type WebClientHandler struct {
-	CreateClientUseCase createclient.CreateClientUseCase
+	CreateClientUseCase create_client.CreateClientUseCase
 }
 
-func NewWebClientHandler(createClientUseCase createclient.CreateClientUseCase) *WebClientHandler {
+func NewWebClientHandler(createClientUseCase create_client.CreateClientUseCase) *WebClientHandler {
 	return &WebClientHandler{
 		CreateClientUseCase: createClientUseCase,
 	}
 }
 
 func (handler *WebClientHandler) CreateClient(w http.ResponseWriter, r *http.Request) {
-	var dto createclient.CreateClientInputDTO
+	var dto create_client.CreateClientInputDTO
+
 	err := json.NewDecoder(r.Body).Decode(&dto)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)

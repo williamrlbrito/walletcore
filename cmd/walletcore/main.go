@@ -47,7 +47,8 @@ func main() {
 		transactionDb,
 		accountDb,
 		eventDispatcher,
-		transactionCreated)
+		transactionCreated,
+	)
 
 	webServer := webserver.NewWebServer(":3000")
 	clientHandler := web.NewWebClientHandler(*createClientUseCase)

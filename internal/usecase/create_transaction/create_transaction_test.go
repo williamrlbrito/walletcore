@@ -50,9 +50,9 @@ func TestCreateTransactionUseCase(t *testing.T) {
 	mockTransaction.On("Create", mock.Anything).Return(nil)
 
 	input := CreateTransactionInputDTO{
-		AcountIDFrom: accountFrom.ID,
-		AcountIDTo:   accountTo.ID,
-		Amount:       100,
+		AccountIDFrom: accountFrom.ID,
+		AccountIDTo:   accountTo.ID,
+		Amount:        100,
 	}
 
 	dispatcher := events.NewEventDispatcher()

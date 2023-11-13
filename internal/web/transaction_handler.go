@@ -15,7 +15,7 @@ func NewWebTransactionHandler(createTransactionUseCase create_transaction.Create
 	return &WebTransactionHandler{CreateTransactionUseCase: createTransactionUseCase}
 }
 
-func (h *WebTransactionHandler) CreateTransaction(w http.ResponseWriter, r *http.Request) {
+func (handler *WebTransactionHandler) CreateTransaction(w http.ResponseWriter, r *http.Request) {
 	var dto create_transaction.CreateTransactionInputDTO
 
 	err := json.NewDecoder(r.Body).Decode(&dto)
@@ -24,8 +24,11 @@ func (h *WebTransactionHandler) CreateTransaction(w http.ResponseWriter, r *http
 		return
 	}
 
-	output, err := h.CreateTransactionUseCase.Execute(dto)
+	println(dto.AccountIDFrom)
+
+	output, err := handler.CreateTransactionUseCase.Execute(dto)
 	if err != nil {
+		println(err.Error())
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
