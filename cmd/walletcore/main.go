@@ -1,4 +1,4 @@
-package walletcore
+package main
 
 import (
 	"database/sql"
@@ -10,6 +10,8 @@ import (
 	"github.com/williamrlbrito/walletcore/internal/usecase/create_account"
 	"github.com/williamrlbrito/walletcore/internal/usecase/create_client"
 	"github.com/williamrlbrito/walletcore/internal/usecase/create_transaction"
+	"github.com/williamrlbrito/walletcore/internal/web"
+	"github.com/williamrlbrito/walletcore/internal/web/webserver"
 	"github.com/williamrlbrito/walletcore/pkg/events"
 )
 
@@ -46,4 +48,15 @@ func main() {
 		accountDb,
 		eventDispatcher,
 		transactionCreated)
+
+	webServer := webserver.NewWebServer(":3000")
+	clientHandler := web.NewWebClientHandler(*createClientUseCase)
+	accountHandler := web.NewWebAccountHandler(*createAccountUseCase)
+	transactionHandler := web.NewWebTransactionHandler(*createTransactionUseCase)
+
+	webServer.AddHandler("/clients", clientHandler.CreateClient)
+	webServer.AddHandler("/accounts", accountHandler.CreateAccount)
+	webServer.AddHandler("/transactions", transactionHandler.CreateTransaction)
+
+	webServer.Start()
 }
