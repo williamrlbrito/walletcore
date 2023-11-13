@@ -6,6 +6,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/williamrlbrito/walletcore/internal/entity"
+	"github.com/williamrlbrito/walletcore/internal/event"
+	"github.com/williamrlbrito/walletcore/pkg/events"
 )
 
 type TransactionGatewayMock struct {
@@ -53,7 +55,9 @@ func TestCreateTransactionUseCase(t *testing.T) {
 		Amount:       100,
 	}
 
-	useCase := NewCreateTransactionUseCase(mockTransaction, mockAccount)
+	dispatcher := events.NewEventDispatcher()
+	event := event.NewTransactionCreatedEvent()
+	useCase := NewCreateTransactionUseCase(mockTransaction, mockAccount, dispatcher, event)
 
 	output, err := useCase.Execute(input)
 	assert.Nil(t, err)

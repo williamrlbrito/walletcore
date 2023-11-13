@@ -26,6 +26,10 @@ func (e *TestEvent) GetDateTime() time.Time {
 	return time.Now()
 }
 
+func (e *TestEvent) SetPayload(payload interface{}) {
+	e.Playload = payload
+}
+
 type TestEventHandler struct {
 	ID int
 }
