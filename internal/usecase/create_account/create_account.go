@@ -1,4 +1,4 @@
-package createaccount
+package create_account
 
 import (
 	"github.com/williamrlbrito/walletcore/internal/entity"

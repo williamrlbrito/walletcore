@@ -1,4 +1,4 @@
-package createclient
+package create_client
 
 import (
 	"testing"
@@ -28,7 +28,7 @@ func TestCreateClientUseCase(t *testing.T) {
 
 	useCase := NewCreateClientUseCase(clientGatewayMock)
 
-	output, err := useCase.Execute(&CreateClientInputDTO{
+	output, err := useCase.Execute(CreateClientInputDTO{
 		Name:  "Jhon Doe",
 		Email: "j@j",
 	})

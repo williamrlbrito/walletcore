@@ -7,9 +7,9 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/williamrlbrito/walletcore/internal/database"
 	"github.com/williamrlbrito/walletcore/internal/event"
-	createaccount "github.com/williamrlbrito/walletcore/internal/usecase/create_account"
-	createclient "github.com/williamrlbrito/walletcore/internal/usecase/create_client"
-	createtransaction "github.com/williamrlbrito/walletcore/internal/usecase/create_transaction"
+	"github.com/williamrlbrito/walletcore/internal/usecase/create_account"
+	"github.com/williamrlbrito/walletcore/internal/usecase/create_client"
+	"github.com/williamrlbrito/walletcore/internal/usecase/create_transaction"
 	"github.com/williamrlbrito/walletcore/pkg/events"
 )
 
@@ -39,9 +39,9 @@ func main() {
 	accountDb := database.NewAccountDB(db)
 	transactionDb := database.NewTransactionDB(db)
 
-	createClientUseCase := createclient.NewCreateClientUseCase(clientDb)
-	createAccountUseCase := createaccount.NewCreateAccountUseCase(accountDb, clientDb)
-	createTransactionUseCase := createtransaction.NewCreateTransactionUseCase(
+	createClientUseCase := create_client.NewCreateClientUseCase(clientDb)
+	createAccountUseCase := create_account.NewCreateAccountUseCase(accountDb, clientDb)
+	createTransactionUseCase := create_transaction.NewCreateTransactionUseCase(
 		transactionDb,
 		accountDb,
 		eventDispatcher,
