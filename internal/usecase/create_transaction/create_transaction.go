@@ -48,6 +48,16 @@ func (useCase *CreateTransactionUseCase) Execute(input CreateTransactionInputDTO
 		return nil, err
 	}
 
+	err = useCase.AcountGateway.UpdateBalance(accountFrom)
+	if err != nil {
+		return nil, err
+	}
+
+	err = useCase.AcountGateway.UpdateBalance(accountTo)
+	if err != nil {
+		return nil, err
+	}
+
 	transaction, err := entity.NewTransaction(accountFrom, accountTo, input.Amount)
 
 	if err != nil {
