@@ -24,9 +24,9 @@ func (handler *WebTransactionHandler) CreateTransaction(w http.ResponseWriter, r
 		return
 	}
 
-	println(dto.AccountIDFrom)
+	ctx := r.Context()
 
-	output, err := handler.CreateTransactionUseCase.Execute(dto)
+	output, err := handler.CreateTransactionUseCase.Execute(ctx, dto)
 	if err != nil {
 		println(err.Error())
 		w.WriteHeader(http.StatusInternalServerError)

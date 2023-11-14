@@ -36,6 +36,11 @@ func (mock *AccountGatewayMock) FindById(id string) (*entity.Account, error) {
 	return args.Get(0).(*entity.Account), args.Error(1)
 }
 
+func (mock *AccountGatewayMock) UpdateBalance(account *entity.Account) error {
+	args := mock.Called(account)
+	return args.Error(0)
+}
+
 func TestCreateAccountUseCase(t *testing.T) {
 	client, _ := entity.NewClient("Jhon Doe", "j@j")
 	clientGatewayMock := &ClientGatewayMock{}
