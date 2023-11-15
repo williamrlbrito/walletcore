@@ -5,25 +5,11 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	"github.com/williamrlbrito/walletcore/internal/entity"
+	"github.com/williamrlbrito/walletcore/internal/usecase/mocks"
 )
 
-type ClientGatewayMock struct {
-	mock.Mock
-}
-
-func (mock *ClientGatewayMock) Get(id string) (*entity.Client, error) {
-	args := mock.Called(id)
-	return args.Get(0).(*entity.Client), args.Error(1)
-}
-
-func (mock *ClientGatewayMock) Save(client *entity.Client) error {
-	args := mock.Called(client)
-	return args.Error(0)
-}
-
 func TestCreateClientUseCase(t *testing.T) {
-	clientGatewayMock := &ClientGatewayMock{}
+	clientGatewayMock := &mocks.ClientGatewayMock{}
 	clientGatewayMock.On("Save", mock.Anything).Return(nil)
 
 	useCase := NewCreateClientUseCase(clientGatewayMock)

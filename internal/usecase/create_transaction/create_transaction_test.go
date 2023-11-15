@@ -12,29 +12,6 @@ import (
 	"github.com/williamrlbrito/walletcore/pkg/events"
 )
 
-type TransactionGatewayMock struct {
-	mock.Mock
-}
-
-func (mock *TransactionGatewayMock) Create(transaction *entity.Transaction) error {
-	args := mock.Called(transaction)
-	return args.Error(0)
-}
-
-type AccountGatewayMock struct {
-	mock.Mock
-}
-
-func (mock *AccountGatewayMock) Save(account *entity.Account) error {
-	args := mock.Called(account)
-	return args.Error(0)
-}
-
-func (mock *AccountGatewayMock) FindById(id string) (*entity.Account, error) {
-	args := mock.Called(id)
-	return args.Get(0).(*entity.Account), args.Error(1)
-}
-
 func TestCreateTransactionUseCase(t *testing.T) {
 	clientFrom, _ := entity.NewClient("Jhon Doe", "john@doe.com")
 	accountFrom := entity.NewAccount(clientFrom)

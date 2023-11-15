@@ -45,7 +45,7 @@ func (suite *AccountDBTestSuite) TestFindByID() {
 	suite.db.Exec("INSERT INTO clients (id, name, email, created_at) VALUES (?, ?, ?, ?)", suite.client.ID, suite.client.Name, suite.client.Email, suite.client.CreatedAt)
 	account := entity.NewAccount(suite.client)
 	suite.accountDB.Save(account)
-	accountFound, err := suite.accountDB.FindById(account.ID)
+	accountFound, err := suite.accountDB.FindByID(account.ID)
 	suite.Nil(err)
 	suite.Equal(account.ID, accountFound.ID)
 	suite.Equal(account.Balance, accountFound.Balance)

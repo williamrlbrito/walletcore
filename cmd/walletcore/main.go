@@ -5,15 +5,18 @@ import (
 	"database/sql"
 	"fmt"
 
+	ckafka "github.com/confluentinc/confluent-kafka-go/kafka"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/williamrlbrito/walletcore/internal/database"
 	"github.com/williamrlbrito/walletcore/internal/event"
+	"github.com/williamrlbrito/walletcore/internal/event/handler"
 	"github.com/williamrlbrito/walletcore/internal/usecase/create_account"
 	"github.com/williamrlbrito/walletcore/internal/usecase/create_client"
 	"github.com/williamrlbrito/walletcore/internal/usecase/create_transaction"
 	"github.com/williamrlbrito/walletcore/internal/web"
 	"github.com/williamrlbrito/walletcore/internal/web/webserver"
 	"github.com/williamrlbrito/walletcore/pkg/events"
+	"github.com/williamrlbrito/walletcore/pkg/kafka"
 	"github.com/williamrlbrito/walletcore/pkg/uow"
 )
 
@@ -24,7 +27,7 @@ func main() {
 			"%s:%s@tcp(%s:%s)/%s?parseTime=true",
 			"root",
 			"root",
-			"localhost",
+			"mysql",
 			"3306",
 			"wallet",
 		))
@@ -35,7 +38,14 @@ func main() {
 
 	defer db.Close()
 
+	configMap := ckafka.ConfigMap{
+		"bootstrap.servers": "kafka:29092",
+		"group.id":          "wallet",
+	}
+	kafkaProducer := kafka.NewKafkaProducer(&configMap)
+
 	eventDispatcher := events.NewEventDispatcher()
+	eventDispatcher.Register("transaction.created", handler.NewTransactionCreatedKafkaHandler(kafkaProducer))
 	transactionCreated := event.NewTransactionCreatedEvent()
 
 	clientDb := database.NewClientDB(db)
@@ -59,7 +69,7 @@ func main() {
 		transactionCreated,
 	)
 
-	webServer := webserver.NewWebServer(":3000")
+	webServer := webserver.NewWebServer(":8080")
 	clientHandler := web.NewWebClientHandler(*createClientUseCase)
 	accountHandler := web.NewWebAccountHandler(*createAccountUseCase)
 	transactionHandler := web.NewWebTransactionHandler(*createTransactionUseCase)
@@ -68,5 +78,6 @@ func main() {
 	webServer.AddHandler("/accounts", accountHandler.CreateAccount)
 	webServer.AddHandler("/transactions", transactionHandler.CreateTransaction)
 
+	fmt.Println("Server running on port 8080")
 	webServer.Start()
 }

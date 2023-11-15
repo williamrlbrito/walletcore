@@ -7,9 +7,9 @@ import (
 )
 
 func TestCreateTransaction(t *testing.T) {
-	clientFrom, _ := NewClient("John Doe", "j@j")
+	clientFrom, _ := NewClient("John Doe", "john@doe.com")
 	accountFrom := NewAccount(clientFrom)
-	clientTo, _ := NewClient("Jane Doe", "j@j")
+	clientTo, _ := NewClient("Jane Doe", "jane@doe.com")
 	accountTo := NewAccount(clientTo)
 
 	accountFrom.Credit(1000)
@@ -23,9 +23,9 @@ func TestCreateTransaction(t *testing.T) {
 }
 
 func TestCreateTransactionWithInsufficientFunds(t *testing.T) {
-	clientFrom, _ := NewClient("John Doe", "j@j")
+	clientFrom, _ := NewClient("John Doe", "john@doe.com")
 	accountFrom := NewAccount(clientFrom)
-	clientTo, _ := NewClient("Jane Doe", "j@j")
+	clientTo, _ := NewClient("Jane Doe", "jane@doe.com")
 	accountTo := NewAccount(clientTo)
 
 	accountFrom.Credit(1000)

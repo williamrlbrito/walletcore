@@ -35,7 +35,7 @@ func TestUpdateClientWithArgsAreInvalid(t *testing.T) {
 }
 
 func TestAddAccountToClient(t *testing.T) {
-	client, _ := NewClient("John Doe", "j@j")
+	client, _ := NewClient("John Doe", "john@doe.com")
 	account := NewAccount(client)
 	err := client.AddAccount(account)
 	assert.Nil(t, err)
