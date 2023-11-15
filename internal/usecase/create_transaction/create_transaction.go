@@ -92,6 +92,7 @@ func (useCase *CreateTransactionUseCase) Execute(ctx context.Context, input Crea
 	}
 
 	useCase.TransactionCreated.SetPayload(output)
+	useCase.EventDispatcher.Dispatch(useCase.TransactionCreated)
 
 	return output, nil
 }
