@@ -21,10 +21,10 @@ func (event *TransactionCreatedEvent) GetPayload() interface{} {
 	return event.Payload
 }
 
-func (event *TransactionCreatedEvent) SetPayload(payload interface{}) {
-	event.Payload = payload
-}
-
 func (event *TransactionCreatedEvent) GetDateTime() time.Time {
 	return time.Now()
+}
+
+func (event *TransactionCreatedEvent) SetPayload(payload interface{}) {
+	event.Payload = payload
 }

@@ -57,18 +57,18 @@ func (useCase *CreateTransactionUseCase) Execute(ctx context.Context, input Crea
 			return err
 		}
 
+		transaction, err := entity.NewTransaction(accountFrom, accountTo, input.Amount)
+
+		if err != nil {
+			return err
+		}
+
 		err = accountRepository.UpdateBalance(accountFrom)
 		if err != nil {
 			return err
 		}
 
 		err = accountRepository.UpdateBalance(accountTo)
-		if err != nil {
-			return err
-		}
-
-		transaction, err := entity.NewTransaction(accountFrom, accountTo, input.Amount)
-
 		if err != nil {
 			return err
 		}
