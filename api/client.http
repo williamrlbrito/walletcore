@@ -1,4 +1,4 @@
-POST http://localhost:3000/clients HTTP/1.1
+POST http://localhost:8080/clients HTTP/1.1
 Content-Type: application/json
 
 {
@@ -7,7 +7,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:3000/accounts HTTP/1.1
+POST http://localhost:8080/accounts HTTP/1.1
 Content-Type: application/json
 
 {
@@ -15,11 +15,11 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:3000/transactions HTTP/1.1
+POST http://localhost:8080/transactions HTTP/1.1
 Content-Type: application/json
 
 {
-  "account_id_from": "694b02fe-25c6-492e-85de-a2946c92dfb6",
-  "account_id_to": "c591974c-16e2-4c93-a4c7-c027f41089ff",
-  "amount": 20
+  "account_id_from": "11030f5b-aa5f-44af-b193-62be6bde8d93",
+  "account_id_to": "bcd8c693-68b2-4686-941c-3ddb43d4f2bf",
+  "amount": 100
 }
