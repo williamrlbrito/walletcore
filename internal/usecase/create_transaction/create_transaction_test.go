@@ -31,10 +31,11 @@ func TestCreateTransactionUseCase(t *testing.T) {
 	}
 
 	dispatcher := events.NewEventDispatcher()
-	event := event.NewTransactionCreatedEvent()
+	eventTransaction := event.NewTransactionCreatedEvent()
+	eventBalance := event.NewBalanceUpdatedEvent()
 	ctx := context.Background()
 
-	useCase := NewCreateTransactionUseCase(mockUow, dispatcher, event)
+	useCase := NewCreateTransactionUseCase(mockUow, dispatcher, eventTransaction, eventBalance)
 
 	output, err := useCase.Execute(ctx, input)
 	assert.Nil(t, err)
